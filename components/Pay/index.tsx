@@ -18,7 +18,7 @@ const sendPayment = async () => {
 
     const payload: PayCommandInput = {
       reference: id,
-      to: "0x0c892815f0B058E69987920A23FBb33c834289cf", // Test address
+      to: "0xB0aDB530F1D2c74FA2344e3dA4DAa47A08ffB2F6", // Test address
       tokens: [
         {
           symbol: Tokens.WLD,
