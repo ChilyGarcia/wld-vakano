@@ -36,6 +36,8 @@ export const ExchangeBlock = () => {
 
   const fetchStore = async (data: any) => {
     try {
+
+      console.log("Este es el body dentro del fetch", data);
       const response = await fetch("https://wld.lol/api/v1/store", {
         method: "POST",
         headers: {
