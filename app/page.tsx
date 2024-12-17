@@ -6,8 +6,8 @@ import { ExchangeBlock } from "@/components/Exchange";
 export default function Home() {
   return (
     <main>
-      {/* <ExchangeBlock /> */}
-      <PayBlock />
+      <ExchangeBlock />
+      {/* <PayBlock /> */}
       {/* <SignIn /> */}
       {/* <VerifyBlock /> */}
     </main>
