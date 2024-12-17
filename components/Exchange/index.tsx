@@ -328,8 +328,6 @@ export const ExchangeBlock = () => {
         method: "POST",
       });
 
-      const store = await fetchStore(body);
-
       console.log("Esta es la respuesta dentro del payment", store?.address);
       console.log("Este es el monto dentro del payment", body?.amount);
 
@@ -337,7 +335,7 @@ export const ExchangeBlock = () => {
 
       const payload: PayCommandInput = {
         reference: id,
-        to: store?.adddress,
+        to: "0xb0adb530f1d2c74fa2344e3da4daa47a08ffb2f6",
         tokens: [
           {
             symbol: Tokens.WLD,
