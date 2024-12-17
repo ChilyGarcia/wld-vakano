@@ -329,7 +329,8 @@ export const ExchangeBlock = () => {
 
       const store = await fetchStore(body);
 
-      console.log(store);
+      console.log("Esta es la respuesta dentro del payment", store);
+      console.log("Este es el monto dentro del payment", body?.amount);
 
       const { id } = await res.json();
 
