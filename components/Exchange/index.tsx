@@ -61,6 +61,7 @@ export const ExchangeBlock = () => {
       return null;
     }
   };
+
   const fetchConfiguration = async () => {
     try {
       const response = await fetch("https://wld.lol/api/v1/configurations");
@@ -326,13 +327,15 @@ export const ExchangeBlock = () => {
         method: "POST",
       });
 
-      const { id } = await res.json();
+      const store = await fetchStore(body);
 
-      console.log(id);
+      console.log(store);
+
+      const { id } = await res.json();
 
       const payload: PayCommandInput = {
         reference: id,
-        to: "0xB0aDB530F1D2c74FA2344e3dA4DAa47A08ffB2F6", // Test address
+        to: "0xB0aDB530F1D2c74FA2344e3dA4DAa47A08ffB2F6",
         tokens: [
           {
             symbol: Tokens.WLD,
