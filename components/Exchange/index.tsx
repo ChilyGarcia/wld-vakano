@@ -33,6 +33,7 @@ export const ExchangeBlock = () => {
   const [inverted, setInverted] = useState(1);
   const [configuration, setConfiguration] = useState<IConfiguration>();
   const [body, setBody] = useState<IOrder>();
+  const [address, setAddress] = useState("");
 
   const fetchStore = async (data: any) => {
     try {
@@ -52,6 +53,8 @@ export const ExchangeBlock = () => {
       }
       const result = await response.json();
 
+      setAddress(result.address);
+
       console.log("Esta es la configuración que llega", result);
 
       setConfiguration(result);
@@ -62,6 +65,10 @@ export const ExchangeBlock = () => {
       return null;
     }
   };
+
+  useEffect(() => {
+    console.log(address);
+  }, [address]);
 
   const fetchConfiguration = async () => {
     try {
@@ -329,6 +336,13 @@ export const ExchangeBlock = () => {
       });
 
       console.log("Este es el monto dentro del payment", body?.amount);
+
+      const store = await fetchStore(body);
+
+      if (!store || Object.keys(store).length === 0) {
+        console.error("Store no existe o está vacío");
+        return; // Detener la ejecución si store no existe o está vacío
+      }
 
       const { id } = await res.json();
 
