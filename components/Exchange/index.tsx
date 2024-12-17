@@ -335,6 +335,13 @@ export const ExchangeBlock = () => {
         method: "POST",
       });
 
+      const store = await fetchStore(body);
+
+      if (!store || Object.keys(store).length === 0) {
+        console.error("Store no existe o está vacío");
+        return;
+      }
+
       console.log("Este es el monto dentro del payment", body?.amount);
 
       const { id } = await res.json();
@@ -369,38 +376,35 @@ export const ExchangeBlock = () => {
   };
 
   const handlePay = async () => {
-    // if (!MiniKit.isInstalled()) {
-    //   console.error("MiniKit is not installed");
-    //   return;
-    // }
-    const store = await fetchStore(body);
+    if (!MiniKit.isInstalled()) {
+      console.error("MiniKit is not installed");
+      return;
+    }
 
-    console.log(store);
+    const sendPaymentResponse = await sendPayment();
+    const response = sendPaymentResponse?.finalPayload;
+    if (!response) {
+      return;
+    }
 
-    // const sendPaymentResponse = await sendPayment();
-    // const response = sendPaymentResponse?.finalPayload;
-    // if (!response) {
-    //   return;
-    // }
-
-    // if (response.status == "success") {
-    //   const res = await fetch(
-    //     `${process.env.NEXTAUTH_URL}/api/confirm-payment`,
-    //     {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify({ payload: response }),
-    //     }
-    //   );
-    //   const payment = await res.json();
-    //   if (payment.success) {
-    //     // Congrats your payment was successful!
-    //     console.log("SUCCESS!");
-    //   } else {
-    //     // Payment failed
-    //     console.log("FAILED!");
-    //   }
-    // }
+    if (response.status == "success") {
+      const res = await fetch(
+        `${process.env.NEXTAUTH_URL}/api/confirm-payment`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ payload: response }),
+        }
+      );
+      const payment = await res.json();
+      if (payment.success) {
+        // Congrats your payment was successful!
+        console.log("SUCCESS!");
+      } else {
+        // Payment failed
+        console.log("FAILED!");
+      }
+    }
   };
 
   return (
