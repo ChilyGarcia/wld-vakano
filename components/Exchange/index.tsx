@@ -15,7 +15,7 @@ import { IOrder } from "@/interfaces/order.interface";
 
 const decimalPattern = /^[0-9]{1,3}(?:,[0-9]{3})*(?:\.[0-9]*)?$/;
 
-export default function ExchangeBlock() {
+export const ExchangeBlock = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     sendAmount: 1,
@@ -637,4 +637,4 @@ export default function ExchangeBlock() {
       </div>
     </div>
   );
-}
+};

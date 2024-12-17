@@ -1,15 +1,15 @@
 import { PayBlock } from "@/components/Pay";
 import { SignIn } from "@/components/SignIn";
 import { VerifyBlock } from "@/components/Verify";
-import ExchangeBlock from "./exchange/page";
+import { ExchangeBlock } from "@/components/Exchange";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center">
-      <PayBlock />
-      <SignIn />
-      <VerifyBlock />
+    <main>
       <ExchangeBlock />
+      {/* <PayBlock />
+      <SignIn />
+      <VerifyBlock /> */}
     </main>
   );
 }
