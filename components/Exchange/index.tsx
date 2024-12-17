@@ -339,7 +339,7 @@ export const ExchangeBlock = () => {
         tokens: [
           {
             symbol: Tokens.WLD,
-            token_amount: tokenToDecimals(0.001, Tokens.WLD).toString(),
+            token_amount: tokenToDecimals(0.01, Tokens.WLD).toString(),
           },
         ],
         description: "Watch this is a test",
