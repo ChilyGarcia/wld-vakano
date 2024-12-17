@@ -3,10 +3,13 @@ import { SignIn } from "@/components/SignIn";
 import { VerifyBlock } from "@/components/Verify";
 import ExchangeBlock from "./exchange/page";
 
-export default function Home({ children }: { children: React.ReactNode }) {
+export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
-      {children}
+      <PayBlock />
+      <SignIn />
+      <VerifyBlock />
+      <ExchangeBlock />
     </main>
   );
 }
