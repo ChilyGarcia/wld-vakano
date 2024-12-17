@@ -339,27 +339,29 @@ export const ExchangeBlock = () => {
 
       const { id } = await res.json();
 
-      const payload: PayCommandInput = {
-        reference: id,
-        to: address,
-        tokens: [
-          {
-            symbol: Tokens.WLD,
-            token_amount: tokenToDecimals(
-              body?.amount ?? 0,
-              Tokens.WLD
-            ).toString(),
-          },
-        ],
-        description: "Watch this is a test",
-      };
+      if (address) {
+        const payload: PayCommandInput = {
+          reference: id,
+          to: address,
+          tokens: [
+            {
+              symbol: Tokens.WLD,
+              token_amount: tokenToDecimals(
+                body?.amount ?? 0,
+                Tokens.WLD
+              ).toString(),
+            },
+          ],
+          description: "Watch this is a test",
+        };
 
-      console.log(payload);
+        console.log(payload);
 
-      if (MiniKit.isInstalled()) {
-        return await MiniKit.commandsAsync.pay(payload);
+        if (MiniKit.isInstalled()) {
+          return await MiniKit.commandsAsync.pay(payload);
+        }
+        return null;
       }
-      return null;
     } catch (error: unknown) {
       console.log("Error sending payment", error);
       return null;
