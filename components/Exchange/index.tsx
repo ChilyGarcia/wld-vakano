@@ -328,7 +328,6 @@ export const ExchangeBlock = () => {
         method: "POST",
       });
 
-      console.log("Esta es la respuesta dentro del payment", store?.address);
       console.log("Este es el monto dentro del payment", body?.amount);
 
       const { id } = await res.json();
