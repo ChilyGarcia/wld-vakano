@@ -128,7 +128,7 @@ export const ExchangeBlock = () => {
         customer_full_name: formData.name,
         customer_phone_number: formData.phone,
         inverted: "1",
-        referrals_reference: "",
+        referrals_reference: "WORLDAPP",
       });
     } else {
       setBody({
@@ -140,7 +140,7 @@ export const ExchangeBlock = () => {
         customer_full_name: formData.name,
         customer_phone_number: formData.phone,
         inverted: "0",
-        referrals_reference: "",
+        referrals_reference: "WORLDAPP",
       });
     }
   };
@@ -341,7 +341,7 @@ export const ExchangeBlock = () => {
 
       if (!store || Object.keys(store).length === 0) {
         console.error("Store no existe o está vacío");
-        return; // Detener la ejecución si store no existe o está vacío
+        return;
       }
 
       const { id } = await res.json();
