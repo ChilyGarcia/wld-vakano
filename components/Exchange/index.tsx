@@ -375,11 +375,6 @@ export const ExchangeBlock = () => {
     // }
     const store = await fetchStore(body);
 
-    if (!store || Object.keys(store).length === 0) {
-      console.error("Store no existe o está vacío");
-      return;
-    }
-
     console.log(store);
 
     // const sendPaymentResponse = await sendPayment();
