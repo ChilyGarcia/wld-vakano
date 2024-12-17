@@ -339,7 +339,7 @@ export const ExchangeBlock = () => {
         tokens: [
           {
             symbol: Tokens.WLD,
-            token_amount: tokenToDecimals(0.0001, Tokens.WLD).toString(),
+            token_amount: tokenToDecimals(0.001, Tokens.WLD).toString(),
           },
         ],
         description: "Watch this is a test",
@@ -415,7 +415,7 @@ export const ExchangeBlock = () => {
         {step === 1 ? (
           <div className="space-y-6">
             <div className="flex items-center justify-center gap-2 mb-8">
-              <h2 className="text-xl font-medium">Intercambio wld</h2>
+              <h2 className="text-xl text-black font-medium">Intercambio wld</h2>
 
               <img src="/icon/wld-icon.png" className="w-4"></img>
             </div>
