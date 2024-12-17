@@ -433,7 +433,7 @@ export const ExchangeBlock = () => {
                     type="number"
                     value={sendValue}
                     onChange={handleSendChange}
-                    className="ml-auto w-24 text-right border-0 p-0 text-lg font-medium focus:outline-none"
+                    className="ml-auto w-24 text-right text-black border-0 p-0 text-lg font-medium focus:outline-none"
                   />
                 </div>
               </div>
@@ -453,7 +453,7 @@ export const ExchangeBlock = () => {
                     type="text"
                     onChange={handleReceiveChange}
                     value={receiveValue}
-                    className="ml-auto w-24 text-right border-0 p-0 text-lg font-medium focus:outline-none"
+                    className="ml-auto w-24 text-right text-black border-0 p-0 text-lg font-medium focus:outline-none"
                   />
                 </div>
               </div>
@@ -524,7 +524,7 @@ export const ExchangeBlock = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   placeholder="Ingrese su nombre completo"
-                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block text-black w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -541,7 +541,7 @@ export const ExchangeBlock = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Ingrese su correo electrónico"
-                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block text-black w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -558,7 +558,7 @@ export const ExchangeBlock = () => {
                   value={formData.phone}
                   onChange={handleInputChange}
                   placeholder="Ingrese su número de teléfono"
-                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full px-3 text-black py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -608,7 +608,7 @@ export const ExchangeBlock = () => {
                   value={formData.document_number}
                   onChange={handleInputChange}
                   placeholder="Ingrese su número de teléfono"
-                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block text-black w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
