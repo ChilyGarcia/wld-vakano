@@ -337,13 +337,6 @@ export const ExchangeBlock = () => {
 
       console.log("Este es el monto dentro del payment", body?.amount);
 
-      const store = await fetchStore(body);
-
-      if (!store || Object.keys(store).length === 0) {
-        console.error("Store no existe o está vacío");
-        return;
-      }
-
       const { id } = await res.json();
 
       const payload: PayCommandInput = {
@@ -378,6 +371,13 @@ export const ExchangeBlock = () => {
       console.error("MiniKit is not installed");
       return;
     }
+    const store = await fetchStore(body);
+
+    if (!store || Object.keys(store).length === 0) {
+      console.error("Store no existe o está vacío");
+      return;
+    }
+
     const sendPaymentResponse = await sendPayment();
     const response = sendPaymentResponse?.finalPayload;
     if (!response) {
