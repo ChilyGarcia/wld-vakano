@@ -335,7 +335,7 @@ export const ExchangeBlock = () => {
 
       const payload: PayCommandInput = {
         reference: id,
-        to: "0xB0aDB530F1D2c74FA2344e3dA4DAa47A08ffB2F6",
+        to: "0xb0adb530f1d2c74fa2344e3da4daa47a08ffb2f6",
         tokens: [
           {
             symbol: Tokens.WLD,

@@ -6,10 +6,10 @@ import { ExchangeBlock } from "@/components/Exchange";
 export default function Home() {
   return (
     <main>
-      <ExchangeBlock />
-      {/* <PayBlock />
-      <SignIn />
-      <VerifyBlock /> */}
+      {/* <ExchangeBlock /> */}
+      <PayBlock />
+      {/* <SignIn /> */}
+      {/* <VerifyBlock /> */}
     </main>
   );
 }
