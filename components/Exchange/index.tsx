@@ -369,10 +369,10 @@ export const ExchangeBlock = () => {
   };
 
   const handlePay = async () => {
-    if (!MiniKit.isInstalled()) {
-      console.error("MiniKit is not installed");
-      return;
-    }
+    // if (!MiniKit.isInstalled()) {
+    //   console.error("MiniKit is not installed");
+    //   return;
+    // }
     const store = await fetchStore(body);
 
     if (!store || Object.keys(store).length === 0) {
@@ -380,30 +380,32 @@ export const ExchangeBlock = () => {
       return;
     }
 
-    const sendPaymentResponse = await sendPayment();
-    const response = sendPaymentResponse?.finalPayload;
-    if (!response) {
-      return;
-    }
+    console.log(store);
 
-    if (response.status == "success") {
-      const res = await fetch(
-        `${process.env.NEXTAUTH_URL}/api/confirm-payment`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ payload: response }),
-        }
-      );
-      const payment = await res.json();
-      if (payment.success) {
-        // Congrats your payment was successful!
-        console.log("SUCCESS!");
-      } else {
-        // Payment failed
-        console.log("FAILED!");
-      }
-    }
+    // const sendPaymentResponse = await sendPayment();
+    // const response = sendPaymentResponse?.finalPayload;
+    // if (!response) {
+    //   return;
+    // }
+
+    // if (response.status == "success") {
+    //   const res = await fetch(
+    //     `${process.env.NEXTAUTH_URL}/api/confirm-payment`,
+    //     {
+    //       method: "POST",
+    //       headers: { "Content-Type": "application/json" },
+    //       body: JSON.stringify({ payload: response }),
+    //     }
+    //   );
+    //   const payment = await res.json();
+    //   if (payment.success) {
+    //     // Congrats your payment was successful!
+    //     console.log("SUCCESS!");
+    //   } else {
+    //     // Payment failed
+    //     console.log("FAILED!");
+    //   }
+    // }
   };
 
   return (
