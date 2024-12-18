@@ -339,6 +339,10 @@ export const ExchangeBlock = () => {
 
       const { id } = await res.json();
 
+          // Aquí, espera a que el usuario confirme antes de proceder al pago
+      const confirmation = confirm("¿Deseas proceder con el pago?");
+      if (!confirmation) return;
+
       if (address) {
         const payload: PayCommandInput = {
           reference: id,
