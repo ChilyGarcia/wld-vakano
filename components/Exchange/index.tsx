@@ -339,10 +339,6 @@ export const ExchangeBlock = () => {
 
       const { id } = await res.json();
 
-          // Aquí, espera a que el usuario confirme antes de proceder al pago
-      const confirmation = confirm("¿Deseas proceder con el pago?");
-      if (!confirmation) return;
-
       if (address) {
         const payload: PayCommandInput = {
           reference: id,
@@ -378,12 +374,12 @@ export const ExchangeBlock = () => {
       return;
     }
 
-    const store = await fetchStore(body);
+    // const store = await fetchStore(body);
 
-    if (!store || Object.keys(store).length === 0) {
-      console.error("Store no existe o está vacío");
-      return;
-    }
+    // if (!store || Object.keys(store).length === 0) {
+    //   console.error("Store no existe o está vacío");
+    //   return;
+    // }
 
     const sendPaymentResponse = await sendPayment();
     const response = sendPaymentResponse?.finalPayload;
