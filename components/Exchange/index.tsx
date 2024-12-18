@@ -385,30 +385,30 @@ export const ExchangeBlock = () => {
     //   return;
     // }
 
-    const sendPaymentResponse = await sendPayment();
-    const response = sendPaymentResponse?.finalPayload;
-    if (!response) {
-      return;
-    }
+    // const sendPaymentResponse = await sendPayment();
+    // const response = sendPaymentResponse?.finalPayload;
+    // if (!response) {
+    //   return;
+    // }
 
-    if (response.status == "success") {
-      const res = await fetch(
-        `${process.env.NEXTAUTH_URL}/api/confirm-payment`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ payload: response }),
-        }
-      );
-      const payment = await res.json();
-      if (payment.success) {
-        // Congrats your payment was successful!
-        console.log("SUCCESS!");
-      } else {
-        // Payment failed
-        console.log("FAILED!");
-      }
-    }
+    // if (response.status == "success") {
+    //   const res = await fetch(
+    //     `${process.env.NEXTAUTH_URL}/api/confirm-payment`,
+    //     {
+    //       method: "POST",
+    //       headers: { "Content-Type": "application/json" },
+    //       body: JSON.stringify({ payload: response }),
+    //     }
+    //   );
+    //   const payment = await res.json();
+    //   if (payment.success) {
+    //     // Congrats your payment was successful!
+    //     console.log("SUCCESS!");
+    //   } else {
+    //     // Payment failed
+    //     console.log("FAILED!");
+    //   }
+    // }
   };
 
   return (
