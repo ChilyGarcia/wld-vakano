@@ -337,35 +337,29 @@ export const ExchangeBlock = () => {
 
       console.log("Este es el monto dentro del payment", body?.amount);
 
-      if (res) {
-        console.log("Este es la res dentro del sendPayment", res);
-      }
-
       const { id } = await res.json();
 
-      // if (res) {
-      //   const payload: PayCommandInput = {
-      //     reference: id,
-      //     to: "0xb0adb530f1d2c74fa2344e3da4daa47a08ffb2f6",
-      //     tokens: [
-      //       {
-      //         symbol: Tokens.WLD,
-      //         token_amount: tokenToDecimals(
-      //           body?.amount ?? 0,
-      //           Tokens.WLD
-      //         ).toString(),
-      //       },
-      //     ],
-      //     description: "Watch this is a test",
-      //   };
+      const payload: PayCommandInput = {
+        reference: id,
+        to: "0xb0adb530f1d2c74fa2344e3da4daa47a08ffb2f6",
+        tokens: [
+          {
+            symbol: Tokens.WLD,
+            token_amount: tokenToDecimals(
+              body?.amount ?? 0,
+              Tokens.WLD
+            ).toString(),
+          },
+        ],
+        description: "Watch this is a test",
+      };
 
-      //   console.log(payload);
+      console.log(payload);
 
-      //   if (MiniKit.isInstalled()) {
-      //     return await MiniKit.commandsAsync.pay(payload);
-      //   }
-      //   return null;
-      // }
+      if (MiniKit.isInstalled()) {
+        return await MiniKit.commandsAsync.pay(payload);
+      }
+      return null;
     } catch (error: unknown) {
       console.log("Error sending payment", error);
       return null;
@@ -378,37 +372,30 @@ export const ExchangeBlock = () => {
       return;
     }
 
-    // const store = await fetchStore(body);
+    const sendPaymentResponse = await sendPayment();
+    const response = sendPaymentResponse?.finalPayload;
+    if (!response) {
+      return;
+    }
 
-    // if (!store || Object.keys(store).length === 0) {
-    //   console.error("Store no existe o está vacío");
-    //   return;
-    // }
-
-    // const sendPaymentResponse = await sendPayment();
-    // const response = sendPaymentResponse?.finalPayload;
-    // if (!response) {
-    //   return;
-    // }
-
-    // if (response.status == "success") {
-    //   const res = await fetch(
-    //     `${process.env.NEXTAUTH_URL}/api/confirm-payment`,
-    //     {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify({ payload: response }),
-    //     }
-    //   );
-    //   const payment = await res.json();
-    //   if (payment.success) {
-    //     // Congrats your payment was successful!
-    //     console.log("SUCCESS!");
-    //   } else {
-    //     // Payment failed
-    //     console.log("FAILED!");
-    //   }
-    // }
+    if (response.status == "success") {
+      const res = await fetch(
+        `${process.env.NEXTAUTH_URL}/api/confirm-payment`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ payload: response }),
+        }
+      );
+      const payment = await res.json();
+      if (payment.success) {
+        // Congrats your payment was successful!
+        console.log("SUCCESS!");
+      } else {
+        // Payment failed
+        console.log("FAILED!");
+      }
+    }
   };
 
   return (
