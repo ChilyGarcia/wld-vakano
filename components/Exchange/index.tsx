@@ -335,27 +335,21 @@ export const ExchangeBlock = () => {
         method: "POST",
       });
 
-      console.log("Este es el monto dentro del payment", body?.amount);
-
       const { id } = await res.json();
+
+      console.log(id);
 
       const payload: PayCommandInput = {
         reference: id,
-        to: "0xb0adb530f1d2c74fa2344e3da4daa47a08ffb2f6",
+        to: "0xb0adb530f1d2c74fa2344e3da4daa47a08ffb2f6", // Test address
         tokens: [
           {
             symbol: Tokens.WLD,
-            token_amount: tokenToDecimals(
-              body?.amount ?? 0,
-              Tokens.WLD
-            ).toString(),
+            token_amount: tokenToDecimals(0.1, Tokens.WLD).toString(),
           },
         ],
         description: "Watch this is a test",
       };
-
-      console.log(payload);
-
       if (MiniKit.isInstalled()) {
         return await MiniKit.commandsAsync.pay(payload);
       }
@@ -371,7 +365,6 @@ export const ExchangeBlock = () => {
       console.error("MiniKit is not installed");
       return;
     }
-
     const sendPaymentResponse = await sendPayment();
     const response = sendPaymentResponse?.finalPayload;
     if (!response) {
