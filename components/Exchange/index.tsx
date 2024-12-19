@@ -194,7 +194,7 @@ export const ExchangeBlock = () => {
         (formData[field as keyof typeof formData] as string).trim() !== ""
     );
 
-    return allFieldsFilled && !hasErrors(); // Considera también que no haya errores
+    return allFieldsFilled && !hasErrors();
   };
 
   const handleBack = () => {
@@ -467,6 +467,8 @@ export const ExchangeBlock = () => {
     setConfiguration(undefined);
     setBody(undefined);
     setAddress("");
+
+    window.location.reload();
   };
 
   return (
