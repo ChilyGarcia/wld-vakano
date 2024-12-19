@@ -771,13 +771,13 @@ export const ExchangeBlock = () => {
               {response === "success" ? (
                 <>
                   <div className="flex justify-center items-center w-full">
-                    <img src="/icon/success.png"></img>
+                    <img className="w-28" src="/icon/success.png"></img>
                   </div>
                 </>
               ) : (
                 <>
                   <div className="flex justify-center items-center w-full">
-                    <img src="/icon/error.png"></img>
+                    <img className="w-28" src="/icon/error.png"></img>
                   </div>
                 </>
               )}
