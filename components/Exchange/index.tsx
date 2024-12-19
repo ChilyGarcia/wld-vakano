@@ -355,7 +355,7 @@ export const ExchangeBlock = () => {
         description: "Watch this is a test",
       };
 
-      console.log(payload);
+      console.log("Payload", payload);
 
       if (MiniKit.isInstalled()) {
         return await MiniKit.commandsAsync.pay(payload);
@@ -364,7 +364,7 @@ export const ExchangeBlock = () => {
     } catch (error) {
       console.error("Error sending payment", error);
 
-      setResponse("error"); 
+      setResponse("error");
       setStep(3);
       return null;
     }
