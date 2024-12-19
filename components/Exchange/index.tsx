@@ -699,7 +699,7 @@ export const ExchangeBlock = () => {
         {step === 3 && (
           <>
             <div className="text-center space-y-6">
-              <h2 className="text-xl font-medium">
+              <h2 className="text-xl text-black font-medium">
                 {response === "success"
                   ? "Orden realizada con éxito"
                   : "Algo ha salido mal"}
