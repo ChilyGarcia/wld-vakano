@@ -355,6 +355,8 @@ export const ExchangeBlock = () => {
         description: "Watch this is a test",
       };
 
+      console.log(payload);
+
       if (MiniKit.isInstalled()) {
         return await MiniKit.commandsAsync.pay(payload);
       }
