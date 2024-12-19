@@ -34,6 +34,7 @@ export const ExchangeBlock = () => {
   const [configuration, setConfiguration] = useState<IConfiguration>();
   const [body, setBody] = useState<IOrder>();
   const [address, setAddress] = useState("");
+  const [response, setResponse] = useState<any>("");
 
   const fetchStore = async (data: any) => {
     try {
@@ -360,6 +361,9 @@ export const ExchangeBlock = () => {
       return null;
     } catch (error) {
       console.error("Error sending payment", error);
+
+      setResponse("error"); 
+      setStep(3);
       return null;
     }
   };
@@ -375,6 +379,8 @@ export const ExchangeBlock = () => {
 
       if (!result || !result.address) {
         console.error("No se pudo obtener la dirección del store");
+        setResponse("error");
+        setStep(3);
         return;
       }
 
@@ -384,6 +390,8 @@ export const ExchangeBlock = () => {
 
       const response = sendPaymentResponse?.finalPayload;
       if (!response) {
+        setResponse("error");
+        setStep(3);
         return;
       }
 
@@ -399,13 +407,32 @@ export const ExchangeBlock = () => {
         const payment = await res.json();
         if (payment.success) {
           console.log("SUCCESS!");
+
+          setResponse("success");
+          setStep(3);
         } else {
+          setResponse("error");
+
+          setStep(3);
           console.log("FAILED!");
         }
       }
     } catch (error) {
       console.error("Error during payment process", error);
+
+      setResponse("error");
+      setStep(3);
     }
+  };
+
+  const handleReset = () => {
+    setStep(1);
+    setSendValue("1");
+    setReceiveValue("");
+    setInverted(1);
+    setConfiguration(undefined);
+    setBody(undefined);
+    setAddress("");
   };
 
   return (
@@ -435,7 +462,7 @@ export const ExchangeBlock = () => {
           </div>
         </div>
 
-        {step === 1 ? (
+        {step === 1 && (
           <div className="space-y-6">
             <div className="flex items-center justify-center gap-2 mb-8">
               <h2 className="text-xl text-black font-medium">
@@ -532,7 +559,9 @@ export const ExchangeBlock = () => {
               CONTINUAR
             </button>
           </div>
-        ) : (
+        )}
+
+        {step === 2 && (
           <div className="space-y-6">
             <h2 className="text-xl font-medium text-center mb-6">
               Información Personal
@@ -661,6 +690,24 @@ export const ExchangeBlock = () => {
               </button>
             </div>
           </div>
+        )}
+
+        {step === 3 && (
+          <>
+            <div className="text-center space-y-6">
+              <h2 className="text-xl font-medium">
+                {response === "success"
+                  ? "Orden realizada con éxito"
+                  : "Algo ha salido mal"}
+              </h2>
+              <button
+                className="w-full bg-[#14162c] hover:bg-[#14162c]/90 text-white font-medium py-2 px-4 rounded-lg"
+                onClick={handleReset}
+              >
+                Volver al inicio
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>
