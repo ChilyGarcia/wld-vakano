@@ -16,7 +16,7 @@ import { IOrder } from "@/interfaces/order.interface";
 const decimalPattern = /^[0-9]{1,3}(?:,[0-9]{3})*(?:\.[0-9]*)?$/;
 
 export const ExchangeBlock = () => {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     sendAmount: 1,
     receiveAmount: 139,
@@ -768,7 +768,21 @@ export const ExchangeBlock = () => {
         {step === 3 && (
           <>
             <div className="text-center space-y-6">
-              <h2 className="text-xl text-black font-medium">
+              {response === "success" ? (
+                <>
+                  <div className="flex justify-center items-center w-full">
+                    <img src="/icon/success.png"></img>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex justify-center items-center w-full">
+                    <img src="/icon/error.png"></img>
+                  </div>
+                </>
+              )}
+
+              <h2 className="text-2xl text-black font-bold">
                 {response === "success"
                   ? "Orden realizada con éxito"
                   : "Algo ha salido mal"}
@@ -777,19 +791,19 @@ export const ExchangeBlock = () => {
               {response === "success" ? (
                 <>
                   <p className="text-black text-justify">
-                    Gracias por confiar en nosotros, a continuacion recibiras un
-                    correo electronico con los detalles de la orden, para mas
-                    informacion, puede visitar nuestro canal de telegram para
-                    poder recibir soporte sobre la orden que acabaste de
-                    realizar con nosotros
+                    Gracias por confiar en nosotros. En breve recibirás un
+                    correo electrónico con los detalles de tu orden. Para más
+                    información, puedes visitar nuestro canal de Telegram, donde
+                    estaremos disponibles para brindarte soporte relacionado con
+                    tu pedido.
                   </p>
                 </>
               ) : (
                 <>
                   <p className="text-black text-justify">
-                    Algo ha salido mal en la orden, lamentamos lo sucedido. Para
-                    saber mas informacion por favor comuniquese con nosotros por
-                    nuestros canales de comunicacion de telegram
+                    Algo salió mal con tu orden y lamentamos lo sucedido. Para
+                    obtener más información, por favor contáctanos a través de
+                    nuestros canales de comunicación en Telegram.
                   </p>
                 </>
               )}
