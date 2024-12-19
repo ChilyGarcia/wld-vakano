@@ -16,7 +16,7 @@ import { IOrder } from "@/interfaces/order.interface";
 const decimalPattern = /^[0-9]{1,3}(?:,[0-9]{3})*(?:\.[0-9]*)?$/;
 
 export const ExchangeBlock = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
   const [formData, setFormData] = useState({
     sendAmount: 1,
     receiveAmount: 139,
@@ -34,7 +34,7 @@ export const ExchangeBlock = () => {
   const [configuration, setConfiguration] = useState<IConfiguration>();
   const [body, setBody] = useState<IOrder>();
   const [address, setAddress] = useState("");
-  const [response, setResponse] = useState<any>("success");
+  const [response, setResponse] = useState<any>("");
   const [errors, setErrors] = useState({
     email: "",
     phone: "",
