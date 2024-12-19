@@ -12,6 +12,7 @@ import {
 import { useEffect } from "react";
 import { IConfiguration } from "@/interfaces/configuration.interface";
 import { IOrder } from "@/interfaces/order.interface";
+import { useRouter } from "next/router";
 
 const decimalPattern = /^[0-9]{1,3}(?:,[0-9]{3})*(?:\.[0-9]*)?$/;
 
@@ -34,6 +35,7 @@ export const ExchangeBlock = () => {
   const [configuration, setConfiguration] = useState<IConfiguration>();
   const [body, setBody] = useState<IOrder>();
   const [address, setAddress] = useState("");
+  const router = useRouter();
 
   const fetchStore = async (data: any) => {
     try {
@@ -398,11 +400,11 @@ export const ExchangeBlock = () => {
         );
         const payment = await res.json();
         if (payment.success) {
-          // El pago fue exitoso
           console.log("SUCCESS!");
+          router.push("/success");
         } else {
-          // El pago falló
           console.log("FAILED!");
+          router.push("/error");
         }
       }
     } catch (error) {
