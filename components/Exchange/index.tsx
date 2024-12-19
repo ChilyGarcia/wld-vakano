@@ -463,6 +463,17 @@ export const ExchangeBlock = () => {
             >
               2
             </div>
+
+            <div className="w-20 h-[2px] bg-gray-200 mx-2" />
+            <div
+              className={`rounded-full w-10 h-10 flex items-center justify-center font-medium ${
+                step === 3
+                  ? "bg-[#14162c] text-white"
+                  : "bg-gray-200 text-gray-600"
+              }`}
+            >
+              3
+            </div>
           </div>
         </div>
 
