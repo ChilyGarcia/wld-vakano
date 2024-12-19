@@ -34,7 +34,7 @@ export const ExchangeBlock = () => {
   const [configuration, setConfiguration] = useState<IConfiguration>();
   const [body, setBody] = useState<IOrder>();
   const [address, setAddress] = useState("");
-  const [response, setResponse] = useState<any>("");
+  const [response, setResponse] = useState<any>("success");
   const [errors, setErrors] = useState({
     email: "",
     phone: "",
@@ -394,7 +394,6 @@ export const ExchangeBlock = () => {
     } catch (error) {
       console.error("Error sending payment", error);
 
-      setResponse("error");
       setStep(3);
       return null;
     }
@@ -427,8 +426,11 @@ export const ExchangeBlock = () => {
         return;
       }
 
-      setResponse("success");
-      setStep(3);
+      if (response.status === "success") {
+        setResponse("success");
+        setStep(3);
+      }
+
       // if (response.status === "success") {
       //   const res = await fetch(
       //     `${process.env.NEXTAUTH_URL}/api/confirm-payment`,
@@ -771,6 +773,50 @@ export const ExchangeBlock = () => {
                   ? "Orden realizada con éxito"
                   : "Algo ha salido mal"}
               </h2>
+
+              {response === "success" ? (
+                <>
+                  <p className="text-black text-justify">
+                    Gracias por confiar en nosotros, a continuacion recibiras un
+                    correo electronico con los detalles de la orden, para mas
+                    informacion, puede visitar nuestro canal de telegram para
+                    poder recibir soporte sobre la orden que acabaste de
+                    realizar con nosotros
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="text-black text-justify">
+                    Algo ha salido mal en la orden, lamentamos lo sucedido. Para
+                    saber mas informacion por favor comuniquese con nosotros por
+                    nuestros canales de comunicacion de telegram
+                  </p>
+                </>
+              )}
+
+              <button
+                className="w-full bg-blue-400 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg mt-4"
+                onClick={() => (window.location.href = "https://t.me/WLD_LOL")}
+              >
+                <div className="flex justify-center items-center w-full">
+                  <div className="mr-6">
+                    <svg
+                      width="20px"
+                      height="20px"
+                      viewBox="0 0 48 48"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <defs></defs>
+                      <path
+                        fill="white"
+                        d="M40.83,8.48c1.14,0,2,1,1.54,2.86l-5.58,26.3c-.39,1.87-1.52,2.32-3.08,1.45L20.4,29.26a.4.4,0,0,1,0-.65L35.77,14.73c.7-.62-.15-.92-1.07-.36L15.41,26.54a.46.46,0,0,1-.4.05L6.82,24C5,23.47,5,22.22,7.23,21.33L40,8.69a2.16,2.16,0,0,1,.83-.21Z"
+                      />
+                    </svg>
+                  </div>
+                  <div>Contactar por telegram</div>
+                </div>
+              </button>
+
               <button
                 className="w-full bg-[#14162c] hover:bg-[#14162c]/90 text-white font-medium py-2 px-4 rounded-lg"
                 onClick={handleReset}
