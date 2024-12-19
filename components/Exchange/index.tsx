@@ -55,7 +55,7 @@ export const ExchangeBlock = () => {
 
       setAddress(result.address);
 
-      console.log("Esta es la configuración que llega", result);
+      console.log("Este es el store que llega", result);
 
       setConfiguration(result);
 
@@ -329,7 +329,7 @@ export const ExchangeBlock = () => {
     };
   }, []);
 
-  const sendPayment = async () => {
+  const sendPayment = async (address: any) => {
     try {
       const res = await fetch(`/api/initiate-payment`, {
         method: "POST",
@@ -339,9 +339,9 @@ export const ExchangeBlock = () => {
 
       console.log(id);
 
-      const payload: PayCommandInput = {
+      const payload = {
         reference: id,
-        to: "0xb0adb530f1d2c74fa2344e3da4daa47a08ffb2f6", // Test address
+        to: address,
         tokens: [
           {
             symbol: Tokens.WLD,
@@ -353,12 +353,13 @@ export const ExchangeBlock = () => {
         ],
         description: "Watch this is a test",
       };
+
       if (MiniKit.isInstalled()) {
         return await MiniKit.commandsAsync.pay(payload);
       }
       return null;
-    } catch (error: unknown) {
-      console.log("Error sending payment", error);
+    } catch (error) {
+      console.error("Error sending payment", error);
       return null;
     }
   };
@@ -368,29 +369,44 @@ export const ExchangeBlock = () => {
       console.error("MiniKit is not installed");
       return;
     }
-    const sendPaymentResponse = await sendPayment();
-    const response = sendPaymentResponse?.finalPayload;
-    if (!response) {
-      return;
-    }
 
-    if (response.status == "success") {
-      const res = await fetch(
-        `${process.env.NEXTAUTH_URL}/api/confirm-payment`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ payload: response }),
-        }
-      );
-      const payment = await res.json();
-      if (payment.success) {
-        // Congrats your payment was successful!
-        console.log("SUCCESS!");
-      } else {
-        // Payment failed
-        console.log("FAILED!");
+    try {
+      const result = await fetchStore(body);
+
+      if (!result || !result.address) {
+        console.error("No se pudo obtener la dirección del store");
+        return;
       }
+
+      const address = result.address;
+
+      const sendPaymentResponse = await sendPayment(address);
+
+      const response = sendPaymentResponse?.finalPayload;
+      if (!response) {
+        return;
+      }
+
+      if (response.status === "success") {
+        const res = await fetch(
+          `${process.env.NEXTAUTH_URL}/api/confirm-payment`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ payload: response }),
+          }
+        );
+        const payment = await res.json();
+        if (payment.success) {
+          // El pago fue exitoso
+          console.log("SUCCESS!");
+        } else {
+          // El pago falló
+          console.log("FAILED!");
+        }
+      }
+    } catch (error) {
+      console.error("Error during payment process", error);
     }
   };
 
