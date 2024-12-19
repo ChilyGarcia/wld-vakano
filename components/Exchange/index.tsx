@@ -35,6 +35,42 @@ export const ExchangeBlock = () => {
   const [body, setBody] = useState<IOrder>();
   const [address, setAddress] = useState("");
   const [response, setResponse] = useState<any>("");
+  const [errors, setErrors] = useState({
+    email: "",
+    phone: "",
+    document_number: "",
+  });
+
+  const validateField = (field: string, value: string) => {
+    let error = "";
+    switch (field) {
+      case "email":
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(value)) {
+          error = "El correo electrónico no es válido.";
+        }
+        break;
+      case "phone":
+        const phonePattern = /^[0-9]{10}$/;
+        if (!phonePattern.test(value)) {
+          error = "El número de teléfono debe tener 10 dígitos.";
+        }
+        break;
+      case "document_number":
+        if (value.trim() === "") {
+          error = "El número de cuenta no puede estar vacío.";
+        }
+        break;
+      default:
+        break;
+    }
+    setErrors((prev) => ({ ...prev, [field]: error }));
+  };
+
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    validateField(id, value);
+  };
 
   const fetchStore = async (data: any) => {
     try {
@@ -146,26 +182,19 @@ export const ExchangeBlock = () => {
     }
   };
 
+  const hasErrors = () => {
+    return Object.values(errors).some((error) => error !== "");
+  };
+
   const isFinalStepValid = () => {
-    if (!body) return false;
+    const requiredFields = ["name", "email", "phone", "document_number"];
+    const allFieldsFilled = requiredFields.every(
+      (field) =>
+        typeof formData[field as keyof typeof formData] === "string" &&
+        (formData[field as keyof typeof formData] as string).trim() !== ""
+    );
 
-    const requiredFields = [
-      "customer_full_name",
-      "amount",
-      "bank",
-      "customer_document_number",
-      "customer_email",
-      "customer_phone_number",
-      "inverted",
-    ];
-
-    const validationResults = requiredFields.map((field) => {
-      const isValid = !!body[field as keyof IOrder];
-
-      return isValid;
-    });
-
-    return validationResults.every((isValid) => isValid);
+    return allFieldsFilled && !hasErrors(); // Considera también que no haya errores
   };
 
   const handleBack = () => {
@@ -257,6 +286,7 @@ export const ExchangeBlock = () => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
 
+    setErrors((prev) => ({ ...prev, [id]: "" }));
     setBody((prevState) => ({
       ...prevState,
       customer_full_name: formData.name,
@@ -600,38 +630,79 @@ export const ExchangeBlock = () => {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Correo electrónico
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="Ingrese su correo electrónico"
-                  className="mt-1 block text-black w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Correo electrónico
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    onBlur={handleInputBlur}
+                    placeholder="Ingrese su correo electrónico"
+                    className={`mt-1 block text-black w-full px-3 py-2 bg-white border ${
+                      errors.email ? "border-red-500" : "border-gray-300"
+                    } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                  />
+                  {errors.email && (
+                    <span className="text-red-500 text-sm">{errors.email}</span>
+                  )}
+                </div>
 
-              <div className="space-y-2">
-                <label
-                  htmlFor="phone"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Teléfono
-                </label>
-                <input
-                  id="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  placeholder="Ingrese su número de teléfono"
-                  className="mt-1 block w-full px-3 text-black py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
+                <div className="space-y-2">
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Teléfono
+                  </label>
+                  <input
+                    id="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    onBlur={handleInputBlur}
+                    placeholder="Ingrese su número de teléfono"
+                    className={`mt-1 block w-full px-3 text-black py-2 bg-white border ${
+                      errors.phone ? "border-red-500" : "border-gray-300"
+                    } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                  />
+                  {errors.phone && (
+                    <span className="text-red-500 text-sm">{errors.phone}</span>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <label
+                    htmlFor="document_number"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Número de cuenta
+                  </label>
+                  <input
+                    id="document_number"
+                    type="text"
+                    value={formData.document_number}
+                    onChange={handleInputChange}
+                    onBlur={handleInputBlur}
+                    placeholder="Ingrese su número de cuenta"
+                    className={`mt-1 block text-black w-full px-3 py-2 bg-white border ${
+                      errors.document_number
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                  />
+                  {errors.document_number && (
+                    <span className="text-red-500 text-sm">
+                      {errors.document_number}
+                    </span>
+                  )}
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -665,23 +736,6 @@ export const ExchangeBlock = () => {
                     </svg>
                   </div>
                 </div>
-              </div>
-
-              <div className="space-y-2">
-                <label
-                  htmlFor="document_number"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Numero de cuenta
-                </label>
-                <input
-                  id="document_number"
-                  type="number"
-                  value={formData.document_number}
-                  onChange={handleInputChange}
-                  placeholder="Ingrese su número de teléfono"
-                  className="mt-1 block text-black w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
               </div>
             </div>
 
