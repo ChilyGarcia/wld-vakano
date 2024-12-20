@@ -16,6 +16,14 @@
   }
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Evitar desplazamiento horizontal */
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -24,6 +32,8 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  -webkit-overflow-scrolling: touch; /* Suaviza el scroll en iOS */
+  overscroll-behavior: none; /* Evitar el rebote del scroll */
 }
 
 @layer utilities {
