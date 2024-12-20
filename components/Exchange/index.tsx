@@ -25,7 +25,8 @@ export const ExchangeBlock = () => {
     email: "",
     phone: "",
     document_number: "",
-    bank_account: "1",
+    bank_account: "",
+    bank: "",
   });
 
   const [sendValue, setSendValue] = useState("");
@@ -400,6 +401,8 @@ export const ExchangeBlock = () => {
   };
 
   const handlePay = async () => {
+    console.log("Se envia la siguiente inforamcion", body);
+
     if (!MiniKit.isInstalled()) {
       console.error("MiniKit is not installed");
       return;
@@ -686,16 +689,16 @@ export const ExchangeBlock = () => {
                     htmlFor="document_number"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Número de cuenta
+                    Numero de documento
                   </label>
                   <input
                     id="document_number"
-                    type="text"
+                    type="tel"
                     value={formData.document_number}
                     onChange={handleInputChange}
                     onBlur={handleInputBlur}
-                    placeholder="Ingrese su número de cuenta"
-                    className={`mt-1 block text-black w-full px-3 py-2 bg-white border ${
+                    placeholder="Ingrese su número de teléfono"
+                    className={`mt-1 block w-full px-3 text-black py-2 bg-white border ${
                       errors.document_number
                         ? "border-red-500"
                         : "border-gray-300"
@@ -707,6 +710,24 @@ export const ExchangeBlock = () => {
                     </span>
                   )}
                 </div>
+
+                <div className="space-y-2">
+                  <label
+                    htmlFor="bank_account"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Número de cuenta
+                  </label>
+                  <input
+                    id="bank_account"
+                    type="text"
+                    value={formData.bank_account}
+                    onChange={handleInputChange}
+                    onBlur={handleInputBlur}
+                    placeholder="Ingrese su número de cuenta"
+                    className={`mt-1 block text-black w-full px-3 py-2 bg-white border  rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -715,11 +736,11 @@ export const ExchangeBlock = () => {
                 </label>
                 <div className="relative">
                   <select
-                    value={formData.bank_account}
+                    value={formData.bank}
                     onChange={(e) =>
                       setFormData((prev) => ({
                         ...prev,
-                        bank_account: e.target.value,
+                        bank: e.target.value,
                       }))
                     }
                     className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 appearance-none"
@@ -741,6 +762,7 @@ export const ExchangeBlock = () => {
                   </div>
                 </div>
               </div>
+
             </div>
 
             <div className="flex gap-4">
